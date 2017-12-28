@@ -36,6 +36,7 @@ import (
 	"compress/gzip"
 	"fmt"
 	"io"
+	"log"
 	"net/http"
 	"strings"
 	"sync"
@@ -138,6 +139,7 @@ func HandlerFor(reg prometheus.Gatherer, opts HandlerOpts) http.Handler {
 			header.Set(contentEncodingHeader, encoding)
 		}
 		w.Write(buf.Bytes())
+		log.Println("Scraped:", mfs[len(mfs)-1].Metric[0].Counter)
 		// TODO(beorn7): Consider streaming serving of metrics.
 	})
 }
